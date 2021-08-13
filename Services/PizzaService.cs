@@ -33,8 +33,10 @@ namespace ContosoPizza.Services
             Pizzas.Add(pizza);
         }
 
+
         public static void Delete(int id)
         {
+            // TODO: This needs to be updated to use the DB 
             var pizza = Get(id);
             if (pizza is null)
                 return;
@@ -44,6 +46,7 @@ namespace ContosoPizza.Services
 
         public static void Update(Pizza pizza)
         {
+            // TODO: This needs to be updated to work with DB
             var index = Pizzas.FindIndex(p => p.Id == pizza.Id);
             if (index == -1)
                 return;
