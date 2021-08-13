@@ -36,7 +36,7 @@ namespace ContosoPizza.Services
 
         public static void Delete(int id)
         {
-            // TODO: This needs to be updated to use the DB 
+            // TODO: This needs to be updated to use the DB
             var pizza = Get(id);
             if (pizza is null)
                 return;
