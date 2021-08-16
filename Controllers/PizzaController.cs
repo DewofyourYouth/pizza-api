@@ -12,11 +12,8 @@ namespace ContosoPizza.Services
         static int nextId = 3;
         static PizzaController()
         {
-            Pizzas = new List<Pizza>
-            {
-                new Pizza { Id = 1, Name = "Classic Italian", IsGlutenFree = false },
-                new Pizza { Id = 2, Name = "Veggie", IsGlutenFree = true }
-            };
+
+            Pizzas = PizzaService.GetAll();
         }
 
         public static List<Pizza> GetAll() => Pizzas;

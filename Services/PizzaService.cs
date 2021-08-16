@@ -6,12 +6,13 @@ namespace ContosoPizza.Services
 {
     public static class PizzaService
     {
+        private static PizzaContext context = new PizzaContext();
+
         private static List<Pizza> GetPizzas()
         {
-            using (var context = new PizzaContext())
-            {
-                return context.Pizzas.ToList();
-            }
+
+            return context.Pizzas.ToList();
+
         }
 
         static List<Pizza> Pizzas { get; }
@@ -21,15 +22,17 @@ namespace ContosoPizza.Services
             Pizzas = GetPizzas();
         }
 
-        public static List<Pizza> GetAll() => Pizzas;
+        public static List<Pizza> GetAll() => context.Pizzas.ToList();
 
-        public static Pizza Get(int id) => Pizzas.FirstOrDefault(p => p.Id == id);
-
+        public static Pizza Get(int id)
+        {
+            var pizza = context.Pizzas.Single(p => p.Id == id);
+            return pizza;
+        }
         public static void Add(Pizza pizza)
         {
-            var db = new PizzaContext();
-            db.Add(pizza);
-            db.SaveChanges();
+            context.Add(pizza);
+            context.SaveChanges();
             Pizzas.Add(pizza);
         }
 
@@ -37,11 +40,14 @@ namespace ContosoPizza.Services
         public static void Delete(int id)
         {
             // TODO: This needs to be updated to use the DB
+            var context = new PizzaContext();
             var pizza = Get(id);
             if (pizza is null)
                 return;
 
-            Pizzas.Remove(pizza);
+            context.Remove(pizza);
+            context.SaveChanges();
+
         }
 
         public static void Update(Pizza pizza)
